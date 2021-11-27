@@ -27,7 +27,7 @@ public:
 
         cout << "Enter Name: "; cin >> name;
         cout << "Enter Phone Number: "; cin>> phone;
-        while(phone.length() != 10) {cout << "Enter Valid Phone Number: "; cin>> phone;}
+        //while(phone.length() != 10) {cout << "Enter Valid Phone Number: "; cin>> phone;}
         cout << "Enter Email: "; cin>> email;
 
         cout << endl;
@@ -41,6 +41,7 @@ public:
 
         if (head == NULL){
             head = temp;
+            tail = temp;
         }
 
         else {
@@ -51,6 +52,8 @@ public:
             }
             x->next = temp;
             temp->prev = x;
+
+            tail = temp;
         }
 
     }
@@ -70,6 +73,27 @@ public:
                 cout << "Phone: +91-" << x->phone << endl;
                 cout << "Email: "<< x->email << endl << endl;
                 x = x->next;
+            }
+        }
+
+
+    }
+
+    void displayAllReversed(){
+        Node* x = tail;
+
+        if (tail == NULL){
+            cout << "Phone Book is Empty" << endl << endl;
+        }
+
+        else{
+
+            while(x != NULL){
+                cout << endl;
+                cout << "Name: " << x->name << endl;
+                cout << "Phone: +91-" << x->phone << endl;
+                cout << "Email: "<< x->email << endl << endl;
+                x = x->prev;
             }
         }
 
@@ -116,8 +140,11 @@ public:
         }
 
         else if (check == 1 && ptr->next == NULL){
+            tail = ptr->prev;
             ptr->prev->next = NULL;
             ptr->prev = NULL;
+
+
 
             delete ptr;
             cout << "Contact Deleted Successfully!" << endl << endl;
@@ -174,7 +201,6 @@ public:
                 break;
             }
             ptr = ptr->next;
-
         }
 
         if (ptr == NULL){
@@ -183,19 +209,145 @@ public:
     }
 
 
+    void sortContacts(){
+       Node *i, *j;
+
+       int k = 0;
+       string tempName, tempPhone, tempEmail;
+
+       for (i=head; i->next != NULL; i=i->next){
+
+        for (j=i->next; j != NULL; j=j->next){
+
+            if (i->name > j->name){
+
+                tempName = i->name;
+                tempPhone = i->phone;
+                tempEmail = i->email;
+
+                i->name = j->name;
+                i->phone = j->phone;
+                i->email = j->email;
+
+                j->name = tempName;
+                j->phone = tempPhone;
+                j->email = tempEmail;
+            }
+        }
+       }
+    }
+
+
+    void updateContact(string name){
+        Node* x = head;
+        int ch;
+        bool i = true;
+
+        while(x != NULL){
+            if(x->name == name){
+                while(i == true){
+                    cout << "UPDATE CONTACT FOR " << x->name << endl;
+                    cout << "1.UPDATE NAME" << endl;
+                    cout << "2.UPDATE PHONE NUMBER" << endl;
+                    cout << "3.UPDATE EMAIL" << endl;
+                    cout << "4.DISPLAY CONTACT" << endl;
+                    cout << "ENTER YOUR CHOICE: "; cin >> ch;
+                    cout << endl;
+
+                    switch(ch){
+                        case 1:
+                            cout << "Enter New Name: ";
+                            cin>> x->name;
+                            break;
+                        case 2:
+                            cout << "Enter New Phone: ";
+                            cin >> x->phone;
+                            break;
+                        case 3:
+                            cout << "Enter New Email: ";
+                            cin >> x->email;
+                            break;
+                        case 4:
+                            display(x);
+                            break;
+                        default:
+                            i = false;
+                            break;
+
+                    }
+                }
+                break;
+            }
+            x = x->next;
+        }
+
+
+        if (x == NULL){
+            cout << "Contact Not Found" << endl  << endl;
+        }
+
+        else {
+            cout << "Contact Updated Successfully!" << endl << endl;
+        }
+
+    }
+    ~phonebook(){
+        cout << "============================" << endl;
+        display(head);
+        display(tail);
+        cout << "============================" << endl;
+    }
 };
 
 
 int main(){
     phonebook ph;
 
+    int choice;
+
+    while(1){
+
+        cout << endl ;
+        cout << "----------------------------" << endl;
+        cout << "           PHONE BOOK" << endl;
+        cout << "----------------------------" << endl;
+        cout << "1.DISPLAY[A-Z]" << endl;
+        cout << "2.DISPLAY[Z-A]" << endl;
+        cout << "3.ADD NEW CONTACT" << endl;
+        cout << "4.UPDATE EXSITING CONTACT" << endl;
+        cout << "5.SEARCH BY NAME" << endl;
+        cout << "6.SEARCH BY PHONE NUMBER" << endl;
+        cout << "7.SEARCH BY EMAIL" << endl;
+        cout << "8.DELETE CONTACT" << endl;
+        cout << "9.EXIT" << endl;
+        cout << "----------------------------" << endl;
+        cout << "ENTER YOUR CHOICE: ";
+        cin >> choice;
+        cout << endl;
+    }
+
+
+
+
+    /*ph.insert();
+
     ph.insert();
 
-    ph.displayAll();
-
-    ph.deleteContact("x-men");
+    ph.sortContacts();
 
     ph.displayAll();
+
+    ph.updateContact("X-MEN");
+
+    ph.displayAll();
+
+
+
+    cout << "---------------------" << endl << endl;
+
+    ph.displayAllReversed();
+
+
 
     //ph.displayAll();
 
@@ -203,7 +355,7 @@ int main(){
 
     //ph.searchByEmail("");
 
-    //ph.searchByPhone("");
+    //ph.searchByPhone(""); */
 
 
     return 0;
