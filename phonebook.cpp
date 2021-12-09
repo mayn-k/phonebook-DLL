@@ -212,7 +212,6 @@ public:
     void sortContacts(){
        Node *i, *j;
 
-       int k = 0;
        string tempName, tempPhone, tempEmail;
 
        for (i=head; i->next != NULL; i=i->next){
