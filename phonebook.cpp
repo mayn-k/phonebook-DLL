@@ -264,7 +264,7 @@ public:
                         case 2:
                             cout << " Enter New Phone: ";
                             cin >> phone;
-                            while((x->phone).length() != 10) {cout << " Enter Valid Phone Number: "; cin>> phone;}
+                            while((phone.length() != 10) {cout << " Enter Valid Phone Number: "; cin>> phone;}
                             x->phone = phone;
                             break;
                         case 3:
